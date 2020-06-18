@@ -8,7 +8,9 @@ class Home extends Component{
             <Fragment>
                 <div className="wrapper">
                     <div className="sidebar"><Sidebar/></div>
-                    <div className="content">Content</div>
+                    <div className="content">
+                        
+                    </div>
                 </div>
 
             </Fragment>
