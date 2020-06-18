@@ -1,0 +1,60 @@
+.main{
+    height: 750px;
+    width: 100%;
+    background: #F5F5F5;
+}
+
+.logo{
+    padding-top: 8%;
+    text-align: center;
+}
+
+.logo > img{
+    height: 100px;
+    width: 100px;
+}
+
+.formLogin{
+    padding-top: 10px;
+    padding-left: 31%;
+    padding-right: 31%;
+}
+
+.form-control {
+    height: 60px !important;
+}
+.btn-primary{
+    width: 100% !important;
+    height: 60px !important;
+}
+/*RESPONSIVE*/
+@media (max-width: 1500px){
+    /*Se ejecutarán estos estilos*/
+    .formLogin{
+        padding-top: 10px;
+        padding-left: 30%;
+        padding-right: 30%;
+    }
+}
+
+@media (max-width: 1488px){
+    /*Se ejecutarán estos estilos*/
+    .formLogin{
+        padding-top: 10px;
+        padding-left: 30%;
+        padding-right: 30%;
+    }
+}
+
+/*Desde la anchura 0px hasta la anchura 963px de pantalla*/
+@media (max-width: 1000px){
+    .logo > img{
+        height: 70px;
+        width: 70px;
+    }
+    .formLogin{
+        padding-top: 10px;
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+}

@@ -1,0 +1,63 @@
+/*
+   DIVICION DE 2 COLUMNAS
+   SIDEBAR   CONTENT
+ */
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    height: 720px;
+    width: 100%;
+}
+
+/* BARRA LATERAL */
+.sidebar{
+    padding: 10px;
+    background-color: #1D1919;
+    border: 1px solid #333;
+    margin-right: 5px;
+    box-shadow: 8px 0 5px -5px #888;
+}
+
+/* CONTENIDO */
+.content{
+    background: #FAFAFA;
+    padding: 20px;
+}
+
+details {
+    color: #D2D1D1;
+}
+
+details[open] {
+    /* the style goes here */
+}
+
+details > ol {
+    font-size: small;
+    padding: 10px;
+    margin-left: 15px;
+    border: none;
+    cursor: pointer;
+    border-bottom: 1px solid #343030;
+}
+
+summary{
+    outline: none;
+    font-size: medium;
+    padding: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #343030;
+}
+
+summary:hover, details>ol:hover{
+    color: #fff3cd;
+}
+
+/* flechita del summary */
+summary::-webkit-details-marker {
+    padding-top: 8px;
+    float: right;
+}
+
+
+
