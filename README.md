@@ -8,6 +8,7 @@ Demo to do list el cual se implemento las siguientes tecnologias:
 * Redux
 * Api Google Maps
 * Firestore  
+* FirebaseAuth
 
 To do list colaborativo, al registrarse se selecciona el grupo de trabajo que pertenece,
 muestra todas las actividades asociadas a su grupo.
