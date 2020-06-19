@@ -61,6 +61,18 @@ class CreateModal extends Component{
         let {name,description,group,userAssign} = this.state;
         if(!group) group = this.groupInput.current.value; /* Validacion por si el evento onChange no trajo este camp */
         if(!userAssign) userAssign = this.userInput.current.value;
+
+        const newActivity = {
+            name:name,
+            description:description,
+            group:group,
+            userAssign:userAssign,
+            status:false,
+            date:Date.now()
+        }
+
+        const {createActivity} = this.props;
+        createActivity(newActivity);
     }
 
     handleChanged = ({target}) =>{

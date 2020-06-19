@@ -1,6 +1,6 @@
 // Middleware redux thunk
 export const createActivity = (newActivity) => {
-    return async (dispatch,getState, {getFirebase,getFirestore}) => {
+    return async (dispatch,getState,{getFirebase,getFirestore}) => {
 
         // hacer una llamada asincrona a fireStore
         const firestore = getFirestore();
@@ -13,8 +13,8 @@ export const createActivity = (newActivity) => {
 
             // Despachamos en pointsReducer
             dispatch({
-                type:'CREATE_POINT',
-                payload: newMarket
+                type:'CREATE_ACTIVITY',
+                payload: newActivity
             });
 
         } catch (e) {
@@ -35,7 +35,7 @@ export const deleteActivity = ({id}) => {
 
             // Despachamos en pointsReducer
             dispatch({
-                type:'REMOVE_POINT',
+                type:'REMOVE_ACTIVITY',
                 payload: id
             });
 
