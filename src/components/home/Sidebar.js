@@ -5,14 +5,16 @@ import { signOut } from "../../store/actions/authActions";
 class Sidebar extends Component{
 
     render() {
-        const { signOut } = this.props;
+        const { signOut, user } = this.props;
+
+       if (user === undefined) return (<Fragment></Fragment>);
 
         return (
             <Fragment>
                 <nav>
 
                     <details open={true}>
-                        <summary>Usuario</summary>
+                        <summary>{user.name}</summary>
                         <ol onClick={signOut}>Cerrar sesión</ol>
                     </details>
 

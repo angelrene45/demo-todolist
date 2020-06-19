@@ -12,7 +12,7 @@ class Home extends Component{
         super(props);
     }
     render() {
-        const {activities,authState,history} = this.props;
+        const {activities,authState,history,profile} = this.props;
 
         if(!authState.uid) history.push('/login');
 
@@ -20,7 +20,7 @@ class Home extends Component{
             <Fragment>
                 <div className="wrapper">
                     <div className="sidebar">
-                        <Sidebar/>
+                        <Sidebar user={profile}/>
                     </div>
                     <div className="content">
                         <Activities activities={activities}/>
@@ -34,6 +34,7 @@ class Home extends Component{
 const mapStateToProps = ({firestore,firebase}) =>{
     if (Object.keys(firestore.ordered).length > 0){ // Comprobamos que ya se recibio informacion desde firestore
         return {
+            profile: firebase.profile,
             authState: firebase.auth,
             activities: firestore.ordered.activities
         }

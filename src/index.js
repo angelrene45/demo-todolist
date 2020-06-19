@@ -18,19 +18,26 @@ const store = createStore(
     rootReducer,
     compose(
         applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
-        reduxFirestore(fbConfig)
+        reduxFirestore(firebase,fbConfig)
     )
 );
+
+/* Con esta configuracion tendremos los datos del usuario de firestore sin hacer consulta a su collection  */
+/* automaticamente se vincula el id de fireAuth con la collection users con el mismo id*/
+const rrfConfig = {
+    userProfile: 'users', /* Indicamos la collecion donde se encuentra los usuarios */
+    useFirestoreForProfile: true
+}
 
 /*  Props para el componente <ReacrReduxFirebaseProvider> */
 const rrfProps = {
     firebase,
-    config: fbConfig,
+    config: rrfConfig,
     dispatch: store.dispatch,
     createFirestoreInstance,
-    userProfile: 'users', // where profiles are stored in database
-    presence: 'presence', // where list of online users is stored in database
+    presence: 'presence',
     sessions: 'sessions'
+
 };
 
 function AuthIsLoaded({ children }) {
