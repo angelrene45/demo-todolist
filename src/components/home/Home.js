@@ -12,7 +12,9 @@ class Home extends Component{
         super(props);
     }
     render() {
-        const {activities} = this.props;
+        const {activities,authState,history} = this.props;
+
+        if(!authState.uid) history.push('/login');
 
         return (
             <Fragment>
@@ -29,13 +31,15 @@ class Home extends Component{
     }
 }
 
-const mapStateToProps = ({firestore}) =>{
+const mapStateToProps = ({firestore,firebase}) =>{
     if (Object.keys(firestore.ordered).length > 0){ // Comprobamos que ya se recibio informacion desde firestore
         return {
+            authState: firebase.auth,
             activities: firestore.ordered.activities
         }
     }else{
         return {
+            authState: firebase.auth,
             activities: []
         }
     }

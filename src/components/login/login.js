@@ -1,8 +1,10 @@
 import React, {Fragment, Component} from 'react'
 import '../../assets/css/login.css'
-import {Form, Container} from "react-bootstrap";
+import {Form, Container, Alert} from "react-bootstrap";
 import logo from '../../assets/icons/login.svg';
 import {Link} from "react-router-dom";
+import { connect } from 'react-redux'
+import {signIn} from "../../store/actions/authActions";
 
 const styleInput = {
     height:"60px"
@@ -44,14 +46,13 @@ class Login extends Component {
         // Llega aqui cuando pase las validaciones
         e.preventDefault();
         const {email,password} = this.state;
-        const user = {
+        const credentials = {
             email:email,
             password:password
         }
 
-        console.log(user)
-        const {history} = this.props;
-        history.push('/home');
+        const {signIn} = this.props;
+        signIn(credentials);
     }
 
     displayInputError = () => {
@@ -69,6 +70,13 @@ class Login extends Component {
     render() {
 
         const {validated}  = this.state;
+        const {authError,authState,history} = this.props;
+
+        if(authState.uid) history.push('/home');
+
+
+        console.log(authError);
+        console.log(authState);
 
         return (
             <Fragment>
@@ -94,6 +102,15 @@ class Login extends Component {
                             </Form>
                             <p><Link to="/register">Registrarse</Link></p>
                         </div>
+
+                        { authError &&
+                            <Alert variant="danger" onClose={this.hideAlert}>
+                                <Alert.Heading>{authError}</Alert.Heading>
+                                <p>
+                                    Usuario o contraseña invalida
+                                </p>
+                            </Alert>
+                        }
                     </Container>
                 </div>
             </Fragment>
@@ -101,4 +118,17 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+    return {
+        authError:state.auth.authError,
+        authState:state.firebase.auth
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return {
+        signIn: (credentials) => dispatch(signIn(credentials))
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

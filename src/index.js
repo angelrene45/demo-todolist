@@ -10,6 +10,8 @@ import { reduxFirestore, getFirestore, createFirestoreInstance } from "redux-fir
 import { ReactReduxFirebaseProvider, getFirebase } from "react-redux-firebase";
 import fbConfig from "./config/fbConfig";
 import firebase from "firebase/app";
+import { useSelector  } from 'react-redux'
+import { isLoaded  } from 'react-redux-firebase';
 
 /* uso de thunk para hacer llamadas asincronas a la api de Firestore */
 const store = createStore(
@@ -25,14 +27,25 @@ const rrfProps = {
     firebase,
     config: fbConfig,
     dispatch: store.dispatch,
-    createFirestoreInstance
+    createFirestoreInstance,
+    userProfile: 'users', // where profiles are stored in database
+    presence: 'presence', // where list of online users is stored in database
+    sessions: 'sessions'
 };
+
+function AuthIsLoaded({ children }) {
+    const auth = useSelector(state => state.firebase.auth)
+    if (!isLoaded(auth)) return <div>Cargando...</div>;
+    return children
+}
 
 
 ReactDOM.render(
     <Provider store={store}>
         <ReactReduxFirebaseProvider {...rrfProps}>
-            <App/>
+            <AuthIsLoaded>
+                <App/>
+            </AuthIsLoaded>
         </ReactReduxFirebaseProvider>
     </Provider>,
     document.getElementById('root')

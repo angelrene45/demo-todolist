@@ -1,14 +1,19 @@
-import React,{Fragment,Component} from 'react'
+import React,{Fragment,Component} from 'react';
+import { connect } from 'react-redux';
+import { signOut } from "../../store/actions/authActions";
 
 class Sidebar extends Component{
+
     render() {
+        const { signOut } = this.props;
+
         return (
             <Fragment>
                 <nav>
 
                     <details open={true}>
                         <summary>Usuario</summary>
-                        <ol>Cerrar sesión</ol>
+                        <ol onClick={signOut}>Cerrar sesión</ol>
                     </details>
 
                     <details open={true}>
@@ -25,4 +30,11 @@ class Sidebar extends Component{
     }
 }
 
-export default Sidebar;
+
+const mapDispatchToProps = (dispatch) =>{
+    return {
+        signOut: () => dispatch(signOut())
+    }
+}
+
+export default connect(null,mapDispatchToProps)(Sidebar);

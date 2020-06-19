@@ -1,8 +1,10 @@
 import React, {Fragment, Component} from 'react'
 import '../../assets/css/login.css'
-import {Form, Container} from "react-bootstrap";
+import {Form, Container, Alert} from "react-bootstrap";
 import logo from '../../assets/icons/register.svg';
 import {Link} from "react-router-dom";
+import {registerUser} from "../../store/actions/authActions";
+import {connect} from "react-redux";
 
 const styleInput = {
     height:"60px"
@@ -43,14 +45,16 @@ class Register extends Component {
 
         // Llega aqui cuando pase las validaciones
         e.preventDefault();
-        const {name,email,password} = this.state;
+        const {name,email,group,password} = this.state;
         const user = {
             name:name,
+            group:group,
             email:email,
             password:password
         }
 
-        console.log(user)
+        const {registerUser} = this.props;
+        registerUser(user);
 
     }
 
@@ -68,6 +72,9 @@ class Register extends Component {
     render() {
 
         const {validated}  = this.state;
+        const {authState,registerError,history} = this.props;
+
+        if(authState.uid) history.push('/home');
 
         return (
             <Fragment>
@@ -83,6 +90,14 @@ class Register extends Component {
                                 <Form.Control style={styleInput} name="name" type="name" placeholder="Nombre" required onChange={this.handleChanged}/>
                                 {this.displayInputError()}
 
+                                <Form.Control style={styleInput}  name="group" as="select" required onChange={this.handleChanged} ref={this.groupInput}>
+                                    <option value="">Seleccione grupo de trabajo</option>
+                                    <option value="test">Testing</option>
+                                    <option value="frontend">Frontend</option>
+                                    <option value="backend">Backend</option>
+                                </Form.Control>
+                                {this.displayInputError()}
+
                                 <Form.Control style={styleInput} name="email" type="email" placeholder="Correo" required onChange={this.handleChanged}/>
                                 {this.displayInputError()}
 
@@ -94,6 +109,15 @@ class Register extends Component {
                                 </button>
                             </Form>
                             <p><Link to="/login">Iniciar sesión</Link></p>
+
+                            { registerError &&
+                            <Alert variant="danger" onClose={this.hideAlert}>
+                                <Alert.Heading>Error en el registro</Alert.Heading>
+                                <p>
+                                    {registerError}
+                                </p>
+                            </Alert>
+                            }
                         </div>
                     </Container>
                 </div>
@@ -102,4 +126,18 @@ class Register extends Component {
     }
 }
 
-export default Register;
+
+const mapStateToProps = (state) => {
+    return {
+        registerError:state.auth.registerError,
+        authState:state.firebase.auth
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return {
+        registerUser: (user) => dispatch(registerUser(user))
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Register);
