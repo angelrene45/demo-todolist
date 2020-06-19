@@ -10,10 +10,6 @@ class Activities extends Component{
 
     modalRef = React.createRef();
 
-    constructor(props) {
-        super(props);
-    }
-
     showModal = (option,activity={}) => () => {
         switch (option) {
             case "create":

@@ -8,9 +8,6 @@ import {compose} from 'redux';
 
 class Home extends Component{
 
-    constructor(props) {
-        super(props);
-    }
     render() {
         const {activities,authState,history,profile} = this.props;
 
@@ -47,10 +44,20 @@ const mapStateToProps = ({firestore,firebase}) =>{
 }
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([
-        {
-            collection:'activities',
-            orderBy:['date','desc']
-        }
-    ])
+    firestoreConnect((props) => {
+
+        const {history} = props;
+        let group = '';
+        if('userData' in history.location.state)
+            group = history.location.state.userData.group;
+
+        return [
+            {
+                collection: 'activities',
+                orderBy: ['date', 'desc'],
+                where: ['group', '==', group]
+            }
+        ]
+
+    })
 )(Home);

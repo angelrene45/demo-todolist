@@ -72,9 +72,9 @@ class Register extends Component {
     render() {
 
         const {validated}  = this.state;
-        const {authState,registerError,history} = this.props;
+        const {authState,registerError,history,userInfo} = this.props;
 
-        if(authState.uid) history.push('/home');
+        if(authState.uid && userInfo.group) history.push('/home',{userData:userInfo});
 
         return (
             <Fragment>
@@ -129,6 +129,7 @@ class Register extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        userInfo:state.firebase.profile,
         registerError:state.auth.registerError,
         authState:state.firebase.auth
     }

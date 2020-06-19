@@ -4,13 +4,11 @@ export const signIn = (credentials) => {
         const firebase = getFirebase();
 
         try {
-            const result = await firebase.auth().signInWithEmailAndPassword(
+            await firebase.auth().signInWithEmailAndPassword(
                 credentials.email,
                 credentials.password
             );
-
             dispatch({type:'LOGIN_SUCCESS'});
-            console.log(result);
         }catch (e) {
             dispatch({type:'LOGIN_ERROR'})
             console.log(e);
@@ -21,7 +19,7 @@ export const signIn = (credentials) => {
 
 export const signOut = () => {
     return async (dispatch,getState,{getFirebase}) => {
-        console.log("entro")
+
         const firebase = getFirebase();
 
         try {

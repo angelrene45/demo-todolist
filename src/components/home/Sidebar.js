@@ -21,7 +21,6 @@ class Sidebar extends Component{
                     <details open={true}>
                         <summary >Actividades</summary>
                         <ol>Lista</ol>
-                        <ol>Agregar</ol>
                         <ol>Propias</ol>
                         <ol>Grupo de trabajo</ol>
                     </details>

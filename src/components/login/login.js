@@ -70,13 +70,10 @@ class Login extends Component {
     render() {
 
         const {validated}  = this.state;
-        const {authError,authState,history} = this.props;
-
-        if(authState.uid) history.push('/home');
+        const {authError,authState,history,userInfo} = this.props;
 
 
-        console.log(authError);
-        console.log(authState);
+        if(authState.uid && userInfo.group) history.push('/home',{userData:userInfo});
 
         return (
             <Fragment>
@@ -120,6 +117,7 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        userInfo:state.firebase.profile,
         authError:state.auth.authError,
         authState:state.firebase.auth
     }
