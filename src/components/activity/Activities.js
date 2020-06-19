@@ -1,5 +1,5 @@
 import React,{Fragment,Component} from 'react'
-import {Button, Container, ListGroup} from "react-bootstrap";
+import {Button, Col, Container, Form, ListGroup, Row} from "react-bootstrap";
 import Activity from "./Activity";
 import ModalActivity from "./ModalActivity";
 import {createActivity, deleteActivity, editActivity} from "../../store/actions/activitiesActions";
@@ -8,7 +8,10 @@ import {connect} from "react-redux";
 
 class Activities extends Component{
 
-    modalRef = React.createRef();
+    constructor(props) {
+        super(props);
+        this.modalRef = React.createRef();
+    }
 
     showModal = (option,activity={}) => () => {
         switch (option) {
@@ -41,17 +44,24 @@ class Activities extends Component{
     }
 
     render() {
-        const {activities} = this.props;
+        const {activities,usersGroup} = this.props;
 
         return (
             <Fragment>
-                <ModalActivity ref={this.modalRef} createActivity={this.addActivity} editActivity={this.updateActivity}/>
+                <ModalActivity createActivity={this.addActivity} editActivity={this.updateActivity} usersGroup={usersGroup} ref={this.modalRef} />
                 <Container>
-                    <Button onClick={this.showModal("create")} variant="success">Agregar</Button><br/><br/>
+                    <Button onClick={this.showModal("create")} variant="success">Agregar</Button> <br/><br/>
+                    <Row>
+                        <Col sm={2} className="text-center">Estatus</Col>
+                        <Col sm={3} className="text-left">Actividad</Col>
+                        <Col sm={2} className="text-center">Grupo</Col>
+                        <Col sm={3} className="text-center">Usuario Asignado</Col>
+                        <Col sm={2} className="text-center">Opciones</Col>
+                    </Row>
                     <ListGroup>
                         { activities && activities.map((activity,key) => {
                                 return (
-                                    <Activity key={key} showModal={this.showModal} activity={activity} removeActivity={this.removeActivity}/>
+                                    <Activity key={key} showModal={this.showModal} activity={activity} removeActivity={this.removeActivity} usersGroup={usersGroup}/>
                                 )
                             })
                         }

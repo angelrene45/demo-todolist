@@ -1,19 +1,20 @@
 import React,{Fragment,Component} from 'react'
 import {Button, Col, Form, Modal, Row} from "react-bootstrap";
 
-class ModalActivity extends Component{
+
+class ModalActivity extends Component {
 
     state = {};
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            action:"", // Create or Edit
-            currentActivity:{},
-            showModal:false,
-            validated:false,
-            errors:{
-                name:"Campo obligatorio",
+            action: "", // Create or Edit
+            currentActivity: {},
+            showModal: false,
+            validated: false,
+            errors: {
+                name: "Campo obligatorio",
             }
         }
 
@@ -21,23 +22,22 @@ class ModalActivity extends Component{
         this.descInput = React.createRef();
         this.userInput = React.createRef();
         this.groupInput = React.createRef();
-
     }
 
 
     hideModal = () => {
         this.setState({
-            showModal:false
+            showModal: false
         })
     }
 
-    showModal = (action,activity={}) => {
-
+    showModal = (action, activity = {}) => {
         this.setState({
-            showModal:true,
-            action:action,
-            currentActivity:activity
+            showModal: true,
+            action: action,
+            currentActivity: activity
         });
+        console.log(this.nameInput) // Marca null investigar porque!!! :(
         /* Activa evento cuando se presione trecla ESC */
         document.addEventListener("keydown", this.escFunction, false);
     }
@@ -45,7 +45,7 @@ class ModalActivity extends Component{
 
     //Cuando el usuario presiona tecla esc se cierra el modal
     escFunction = (e) => {
-        if(e.keyCode === 27) {
+        if (e.keyCode === 27) {
             this.hideModal();
         }
     }
@@ -57,28 +57,29 @@ class ModalActivity extends Component{
             e.preventDefault();
             e.stopPropagation();
             this.setState({
-                validated:true
+                validated: true
             });
             return;
         }
         // Llega aqui cuando pase las validaciones
         e.preventDefault();
-        let {name,description,group,userAssign} = this.state;
-        if(!group) group = this.groupInput.current.value; /* Validacion por si el evento onChange no trajo este camp */
-        if(!userAssign) userAssign = this.userInput.current.value;
-        if(!name) name = this.nameInput.current.value;
-        if(!description) description = this.descInput.current.value;
+        let {name, description, group, userAssign} = this.state;
+        if (!group) group = this.groupInput.current.value; /* Validacion por si el evento onChange no trajo este camp */
+        if (!userAssign) userAssign = this.userInput.current.value;
+        if (!name) name = this.nameInput.current.value;
+        if (!description) description = this.descInput.current.value;
+
 
         const newActivity = {
-            name:name,
-            description:description,
-            group:group,
-            userAssign:userAssign,
-            status:false,
-            date:Date.now()
+            name: name,
+            description: description,
+            group: group,
+            userAssign: userAssign,
+            status: false,
+            date: Date.now()
         }
 
-        const {action,currentActivity} = this.state;
+        const {action, currentActivity} = this.state;
         switch (action) {
             case "create":
                 const {createActivity} = this.props;
@@ -86,7 +87,7 @@ class ModalActivity extends Component{
                 break;
             case "edit":
                 const {editActivity} = this.props;
-                editActivity({id:currentActivity.id,...newActivity});
+                editActivity({id: currentActivity.id, ...newActivity});
                 break;
             default:
                 break;
@@ -94,16 +95,30 @@ class ModalActivity extends Component{
 
     }
 
-    handleChanged = ({target}) =>{
-        const {name,value} = target;
+    handleChanged = ({target}) => {
+        const {name, value} = target;
         this.setState({
-            [name]:value
+            [name]: value
         })
     }
+
+    fillUsersSelected = () => {
+        const {usersGroup} = this.props;
+
+        if (usersGroup === undefined) return;
+
+        return usersGroup.map((user, index) => {
+            return <option key={index} value={user.id}>{user.name}</option>
+        });
+
+    }
+
 
     render() {
 
         const {validated,errors,showModal,currentActivity,action}  = this.state;
+
+
 
         let title = "";
         let botonText = "";
@@ -172,7 +187,7 @@ class ModalActivity extends Component{
                                     <Form.Group controlId="formUser">
                                         <Form.Label>Usuario asignado</Form.Label>
                                         <Form.Control name="userAssign" as="select" required onChange={this.handleChanged} ref={this.userInput} defaultValue={currentActivity.userAssign}>
-                                            <option value="54454654654">JUANN</option>
+                                            { this.fillUsersSelected() }
                                         </Form.Control>
                                         <Form.Control.Feedback type="invalid">
                                             {errors.name}
@@ -193,4 +208,4 @@ class ModalActivity extends Component{
     }
 }
 
-export default ModalActivity;
+export default (ModalActivity);
