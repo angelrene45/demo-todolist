@@ -20,12 +20,13 @@
     padding-right: 31%;
 }
 
-.form-control {
-    height: 60px !important;
-}
-.btn-primary{
-    width: 100% !important;
-    height: 60px !important;
+.btn-login{
+    width: 100%;
+    height: 60px;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+
 }
 /*RESPONSIVE*/
 @media (max-width: 1500px){

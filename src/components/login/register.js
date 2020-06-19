@@ -1,8 +1,12 @@
 import React, {Fragment, Component} from 'react'
 import '../../assets/css/login.css'
-import {Form, Button, Container} from "react-bootstrap";
+import {Form, Container} from "react-bootstrap";
 import logo from '../../assets/icons/register.svg';
 import {Link} from "react-router-dom";
+
+const styleInput = {
+    height:"60px"
+}
 
 class Register extends Component {
 
@@ -45,7 +49,7 @@ class Register extends Component {
             email:email,
             password:password
         }
-        
+
         console.log(user)
 
     }
@@ -76,18 +80,18 @@ class Register extends Component {
 
                         <div className="formLogin">
                             <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
-                                <Form.Control name="name" type="name" placeholder="Nombre" required onChange={this.handleChanged}/>
+                                <Form.Control style={styleInput} name="name" type="name" placeholder="Nombre" required onChange={this.handleChanged}/>
                                 {this.displayInputError()}
 
-                                <Form.Control name="email" type="email" placeholder="Correo" required onChange={this.handleChanged}/>
+                                <Form.Control style={styleInput} name="email" type="email" placeholder="Correo" required onChange={this.handleChanged}/>
                                 {this.displayInputError()}
 
-                                <Form.Control name="password" type="password" placeholder="Contraseña" required onChange={this.handleChanged}/>
+                                <Form.Control style={styleInput} name="password" type="password" placeholder="Contraseña" required onChange={this.handleChanged}/>
                                 {this.displayInputError()}
                                 <br/>
-                                <Button variant="primary" type="submit">
+                                <button className="btn-login" type="submit">
                                     Registrarse
-                                </Button>
+                                </button>
                             </Form>
                             <p><Link to="/login">Iniciar sesión</Link></p>
                         </div>
