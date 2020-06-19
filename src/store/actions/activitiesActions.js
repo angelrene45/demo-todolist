@@ -24,6 +24,31 @@ export const createActivity = (newActivity) => {
     }
 };
 
+export const editActivity = (activity) => {
+    return async (dispatch,getState, {getFirebase,getFirestore}) => {
+
+        const {id} = activity;
+
+        // hacer una llamada asincrona a fireStore
+        const firestore = getFirestore();
+
+        try {
+            await firestore.collection('activities').doc(id).update({...activity});
+
+            // Despachamos en pointsReducer
+            dispatch({
+                type:'UPDATE_ACTIVITY',
+                payload: id
+            });
+
+        } catch (e) {
+            // Error Firebase
+            console.log(e)
+        }
+    }
+};
+
+
 export const deleteActivity = ({id}) => {
     return async (dispatch,getState, {getFirebase,getFirestore}) => {
 

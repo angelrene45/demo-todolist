@@ -44,7 +44,8 @@ export default compose(
     connect(mapStateToProps),
     firestoreConnect([
         {
-            collection:'activities'
+            collection:'activities',
+            orderBy:['date','desc']
         }
     ])
 )(Home);

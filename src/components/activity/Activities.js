@@ -1,8 +1,8 @@
 import React,{Fragment,Component} from 'react'
 import {Button, Container, ListGroup} from "react-bootstrap";
 import Activity from "./Activity";
-import CreateModal from "./CreateModal";
-import {createActivity, deleteActivity} from "../../store/actions/activitiesActions";
+import ModalActivity from "./ModalActivity";
+import {createActivity, deleteActivity, editActivity} from "../../store/actions/activitiesActions";
 import {connect} from "react-redux";
 
 
@@ -14,18 +14,14 @@ class Activities extends Component{
         super(props);
     }
 
-    showModal = (option) => () => {
+    showModal = (option,activity={}) => () => {
         switch (option) {
             case "create":
-                this.modalRef.current.showModal();
+                this.modalRef.current.showModal("create",{});
                 break;
             case "edit":
-
+                this.modalRef.current.showModal("edit",activity);
                 break;
-
-            case "delete":
-                break;
-
             default:
                 break;
         }
@@ -42,12 +38,18 @@ class Activities extends Component{
         deleteActivity(activity);
     }
 
+    updateActivity = (activity) => {
+        const {editActivity} = this.props;
+        editActivity(activity);
+        this.modalRef.current.hideModal();
+    }
+
     render() {
         const {activities} = this.props;
 
         return (
             <Fragment>
-                <CreateModal ref={this.modalRef} createActivity={this.addActivity}/>
+                <ModalActivity ref={this.modalRef} createActivity={this.addActivity} editActivity={this.updateActivity}/>
                 <Container>
                     <Button onClick={this.showModal("create")} variant="success">Agregar</Button><br/><br/>
                     <ListGroup>
@@ -67,7 +69,8 @@ class Activities extends Component{
 const mapDispatchToProps = (dispatch) =>{
     return {
         createActivity: (newActivity) => dispatch(createActivity(newActivity)),
-        deleteActivity: (activity) => dispatch(deleteActivity(activity))
+        deleteActivity: (activity) => dispatch(deleteActivity(activity)),
+        editActivity: (activity) => dispatch(editActivity(activity))
     }
 }
 export default connect(null,mapDispatchToProps)(Activities);

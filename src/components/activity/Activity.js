@@ -18,13 +18,13 @@ class Activity extends Component{
                         <Col sm={2} className="text-center">{activity.group}</Col>
                         <Col sm={3} className="text-center">{activity.userAssign}</Col>
                         <Col sm={2} className="text-right">
-                            <Button variant="primary" onClick={showModal("edit")}>Editar</Button>
+                            <Button variant="primary" onClick={showModal("edit",activity)}>Editar</Button>
                             <Button variant="danger" onClick={removeActivity(activity)}>Eliminar</Button>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <Moment fromNow>{activity.date}</Moment>
+                            <Moment interval={3000} fromNow>{activity.date}</Moment>
                         </Col>
                     </Row>
                 </ListGroup.Item>

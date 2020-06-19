@@ -16,6 +16,10 @@ const activitiesReducers = (state = initState,action) => {
             // No es necesario hacer nada ya que los datos estan sincronizados con firestore
             return state;
 
+        case "UPDATE_ACTIVITY":
+            // No es necesario hacer nada ya que los datos estan sincronizados con firestore
+            return state;
+
         default:
             return state;
     }
