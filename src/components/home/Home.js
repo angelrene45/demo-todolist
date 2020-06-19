@@ -21,7 +21,7 @@ class Home extends Component{
                         <Sidebar user={profile}/>
                     </div>
                     <div className="content">
-                        <Activities activities={activities} usersGroup={usersGroup}/>
+                        <Activities activities={activities} usersGroup={usersGroup} user={profile}/>
                     </div>
                 </div>
             </Fragment>

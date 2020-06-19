@@ -44,11 +44,12 @@ class Activities extends Component{
     }
 
     render() {
-        const {activities,usersGroup} = this.props;
+        const {activities,usersGroup,user} = this.props;
+
 
         return (
             <Fragment>
-                <ModalActivity createActivity={this.addActivity} editActivity={this.updateActivity} usersGroup={usersGroup} ref={this.modalRef} />
+                <ModalActivity createActivity={this.addActivity} editActivity={this.updateActivity} usersGroup={usersGroup} ref={this.modalRef} user={user} />
                 <Container>
                     <Button onClick={this.showModal("create")} variant="success">Agregar</Button> <br/><br/>
                     <Row>

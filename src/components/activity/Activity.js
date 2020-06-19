@@ -9,6 +9,7 @@ class Activity extends Component{
         const {showModal,activity,removeActivity,usersGroup} = this.props;
 
         const user = usersGroup.find(user => user.id === activity.userAssign);
+        const name = user ? user.name : ""
 
 
         return (
@@ -18,7 +19,7 @@ class Activity extends Component{
                         <Col sm={2} className="text-center"><Form.Check type="checkbox" defaultChecked={activity.status}/></Col>
                         <Col sm={3} className="text-left">{activity.name}</Col>
                         <Col sm={2} className="text-center">{activity.group}</Col>
-                        <Col sm={3} className="text-center">{user.name}</Col>
+                        <Col sm={3} className="text-center">{name}</Col>
                         <Col sm={2} className="text-right">
                             <Button variant="primary" onClick={showModal("edit",activity)}>Editar</Button>
                             <Button variant="danger" onClick={removeActivity(activity)}>Eliminar</Button>

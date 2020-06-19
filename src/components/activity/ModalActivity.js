@@ -117,8 +117,9 @@ class ModalActivity extends Component {
     render() {
 
         const {validated,errors,showModal,currentActivity,action}  = this.state;
+        const {user} = this.props;
 
-
+        const defectGroup = user ? user.group : "";
 
         let title = "";
         let botonText = "";
@@ -170,10 +171,10 @@ class ModalActivity extends Component {
                                 <Col>
                                     <Form.Group controlId="formGroup">
                                         <Form.Label>Grupo de trabajo</Form.Label>
-                                        <Form.Control name="group" as="select" required onChange={this.handleChanged} ref={this.groupInput} defaultValue={currentActivity.group}>
-                                            <option value="test">Testing</option>
-                                            <option value="frontend">Frontend</option>
-                                            <option value="backend">Backend</option>
+                                        <Form.Control name="group" as="select" required onChange={this.handleChanged} ref={this.groupInput} defaultValue={defectGroup}>
+                                            <option value="test" disabled={true}>Testing</option>
+                                            <option value="frontend" disabled={true}>Frontend</option>
+                                            <option value="backend" disabled={true}>Backend</option>
                                         </Form.Control>
                                         <Form.Control.Feedback type="invalid">
                                             {errors.name}
